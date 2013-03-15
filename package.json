@@ -1,0 +1,32 @@
+{
+  "name": "scotty",
+  "version": "0.0.2",
+  "description": "A thin wrapper for real media streaming over HTTP in node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "dependencies": {
+    "mr.rager": "*",
+    "mime-magic": "*"
+  },
+  "keywords": [
+    "aite",
+    "aight",
+    "right",
+    "easy",
+    "streaming",
+    "http",
+    "media",
+    "streams",
+    "range",
+    "bytes",
+    "content-range",
+    "magic"
+  ],
+  "author": "rubberduckie",
+  "license": "BSD",
+  "devDependencies": {},
+  "readmeFilename": "README.md"
+}
