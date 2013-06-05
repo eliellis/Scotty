@@ -9,8 +9,7 @@ function Scotty(req, file, opts){
     stream.call(this);
     var self = this;
     self.opts = opts;
-    self.path = file;
-    self.buffers = [];
+    self.data = file;
     self.src = req;
 
     self.on('pipe', function(stream){
@@ -45,7 +44,7 @@ function Scotty(req, file, opts){
                         };
                         if (opts && opts.headers) addHeaders(headers, opts.headers);
                         self._dest.writeHead(206, headers);
-                        proxyS = fs.createReadStream(self.path, {start: ranges[0].begining, end: ranges[0].end});
+                        proxyS = (typeof self.data === 'string') ? fs.createReadStream(self.data, {start: ranges[0].begining, end: ranges[0].end}) : self.data;
                         proxyS.pipe(self._dest);
                         proxyS.pipe(self);
                     }
@@ -56,7 +55,7 @@ function Scotty(req, file, opts){
                         };
                         if (opts && opts.headers) addHeaders(full, opts.headers);
                         self._dest.writeHead(200, full);
-                        proxyS = fs.createReadStream(self.path);
+                        proxyS = fs.createReadStream(self.data);
                         proxyS.pipe(self._dest);
                         proxyS.pipe(self);
                     }
@@ -66,10 +65,10 @@ function Scotty(req, file, opts){
 
     process.nextTick(function(){
         if (os.platform() === "Windows"){
-            self.path = self.path.replace(/\//, '\\');
+            self.data = self.data.replace(/\//, '\\');
         }
-        mime(self.path, function(err, type){
-            fs.stat(self.path, polish(err, type));
+        mime(self.data, function(err, type){
+            fs.stat(self.data, polish(err, type));
         });
     });
 }
